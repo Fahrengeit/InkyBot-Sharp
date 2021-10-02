@@ -13,11 +13,12 @@ namespace InkyBotSharp
     {
         private Story _story;
         private DiscordSocketClient _discord;
+        private EmojiManager _emojiManager;
 
-        public StoryManager(
-            DiscordSocketClient discord)
+        public StoryManager(DiscordSocketClient discord, EmojiManager emojiManager)
         {
             _discord = discord;
+            _emojiManager = emojiManager;
             
             _discord.ReactionAdded += OnReactionAdded;
         }
@@ -59,13 +60,13 @@ namespace InkyBotSharp
         private async Task OnReactionAdded(Cacheable<IUserMessage, ulong> arg1, ISocketMessageChannel channel, SocketReaction reaction)
         {
             if (_story == null) return;
-            if (!reaction.User.Value.IsBot && EmojiManager.NumberEmojis.Contains(reaction.Emote.Name))
+            if (!reaction.User.Value.IsBot && _emojiManager.NumberEmojis.Contains(reaction.Emote.Name))
             {
                 var message = await channel.GetMessageAsync(reaction.MessageId) as IUserMessage;
                 var allEmotes = message.Reactions.Keys.ToArray();
                 message.RemoveReactionsAsync(message.Author, allEmotes);
 
-                int choiceIndex = EmojiManager.GetNumberFromEmoji(reaction.Emote);
+                int choiceIndex = _emojiManager.GetNumberFromEmoji(reaction.Emote);
 
                 await MakeChoice(choiceIndex - 1, channel);
             }
@@ -108,7 +109,7 @@ namespace InkyBotSharp
                 var choiceMessage = await channel.SendMessageAsync(choices);
                 for (int i = 0; i < _story.currentChoices.Count; i++)
                 {
-                    var emoji = EmojiManager.GetEmojiFromNumber(i + 1);
+                    var emoji = _emojiManager.GetEmojiFromNumber(i + 1);
                     if (emoji != null)
                         await choiceMessage.AddReactionAsync(emoji);
                 }

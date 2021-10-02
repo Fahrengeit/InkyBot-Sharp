@@ -41,7 +41,7 @@ namespace InkyBotSharp
             provider.GetRequiredService<LoggingService>();      // Start the logging service
             provider.GetRequiredService<CommandHandler>(); 		// Start the command handler service
             provider.GetRequiredService<StoryManager>(); 		// Start the story manager
-
+            provider.GetRequiredService<EmojiManager>();        // Start the emoji manager
 
             await provider.GetRequiredService<StartupService>().StartAsync();       // Start the startup service
 
@@ -63,7 +63,8 @@ namespace InkyBotSharp
            .AddSingleton<CommandHandler>()         // Add the command handler to the collection
            .AddSingleton<StartupService>()         // Add startupservice to the collection
            .AddSingleton<LoggingService>()         // Add loggingservice to the collection
-           .AddSingleton<StoryManager>()    //Add StoryManager to the collection
+           .AddSingleton<StoryManager>()           //Add StoryManager to the collection
+           .AddSingleton<EmojiManager>()          //Add EmojiManager to the collection
            .AddSingleton(_config);           // Add the configuration to the collection
         }
 

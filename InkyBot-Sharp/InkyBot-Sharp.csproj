@@ -205,11 +205,11 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CommandHandler.cs" />
-    <Compile Include="StoryManager\StoryManager.cs" />
-    <Compile Include="StoryManager\EmojiManager.cs" />
     <Compile Include="Services\LoggingService.cs" />
     <Compile Include="Services\StartupService.cs" />
     <Compile Include="Modules\GameModule.cs" />
+    <Compile Include="Managers\StoryManager.cs" />
+    <Compile Include="Managers\EmojiManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Ink\intercept.json" />
@@ -219,7 +219,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
-    <Folder Include="StoryManager\" />
     <Folder Include="Modules\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
